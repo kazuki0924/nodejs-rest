@@ -20,9 +20,9 @@ const fileStorage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   if (
-    file.minetype === 'image/png' ||
-    file.minetype === 'image/jpg' ||
-    file.minetype === 'image/jpeg'
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg'
   ) {
     cb(null, true);
   } else {
@@ -30,7 +30,8 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
+app.use(bodyParser.json()); // application/json
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 );
@@ -40,7 +41,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Methods',
-    'GET, POST, PUT, PATCH, DELETE'
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
   );
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
@@ -60,7 +61,6 @@ mongoose
     'mongodb+srv://Kazuki-nodejs:password1234@cluster0-svlok.gcp.mongodb.net/messages?retryWrites=true&w=majority'
   )
   .then(result => {
-    app.listen(8080);
+    app.listen(8090);
   })
   .catch(err => console.log(err));
-app.listen(8090);
