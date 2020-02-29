@@ -40,7 +40,7 @@ router.patch(
   '/status',
   isAuth,
   [
-    body(status)
+    body('status')
       .trim()
       .not()
       .isEmpty()
